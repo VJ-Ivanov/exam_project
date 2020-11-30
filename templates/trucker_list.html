@@ -1,0 +1,29 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}
+    {% include 'partials/sub_nav.html' %}
+    <table style="width:100%"  class="table table-hover">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Trucker Name</th>
+                <th scope="col">Country</th>
+                <th scope="col">Billing Address</th>
+                <th scope="col"><button type="button" class="btn btn-primary">Add Trucker</button></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for trucker in truckers %}
+              <tr>
+                <th>{{ trucker.trucker_name }}</th>
+                <th>{{ trucker.country.name  }}</th>
+                <th>{{ trucker.billing_address}}</th>
+                <th scope="col">
+                    <button type="button" class="btn btn-info">Details</button>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </th>
+              </tr>
+{% endfor %}
+            </tbody>
+    </table>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Country(models.Model):
@@ -22,7 +23,11 @@ class CustomerCompany(models.Model):
     customer_name = models.CharField(max_length=20, blank=False)
     billing_address = models.CharField(max_length=40)
     company_logo = models.URLField
+    published = models.BooleanField(default=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('customer list')
 
     def __str__(self):
         return f'{self.country} - {self.customer_name}'
@@ -49,8 +54,8 @@ class TransportCompany(models.Model):
 
 
 class TransportRequest(models.Model):
-    IMP = 'imp'
-    EXP = 'exp'
+    IMP = 'IMP'
+    EXP = 'IMP'
 
     DIRECTIONS = (
         (IMP, 'Import'),

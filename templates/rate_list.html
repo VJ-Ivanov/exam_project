@@ -1,0 +1,32 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}
+    <table style="width:100%"  class="table table-hover">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Customer</th>
+                <th scope="col">Warehouse Location</th>
+                <th scope="col">Direction</th>
+                <th scope="col">Seaport</th>
+                <th scope="col">Trucker</th>
+                <th scope="col">Rate</th>
+                <th scope="col">From:</th>
+                <th scope="col">To:</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rate in rates %}
+              <tr>
+                <th scope="row">{{ rate.request.warehouse.customer_company.customer_name }}</th>
+                <th>{{ rate.request.warehouse.warehouse_address }}</th>
+                <th>{{ rate.request.direction  }}</th>
+                <th>{{ rate.request.seaport.un_location_code }}</th>
+                <th>{{ rate.trucker.trucker_name }}</th>
+                <th>{{ rate.rate }} €</th>
+                <th>{{ rate.valid_from }}</th>
+                <th>{{ rate.valid_from }}</th>
+              </tr>
+{% endfor %}
+            </tbody>
+    </table>
+{% endblock %}

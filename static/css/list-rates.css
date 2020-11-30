@@ -1,0 +1,11 @@
+.list-pets .list-item {
+    width: 25%;
+}
+
+#root {
+    width: 1046px;
+}
+
+img {
+    max-width: 100%;
+}
