@@ -1,0 +1,17 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}
+    <form method="post">
+        {{ form.customer_name.label }}
+        {{ form.customer_name }}
+        {{ form.billing_address.label }}
+        {{ form.billing_address }}
+        {{ form.country.label }}
+        {{ form.country }}
+        {{ form.company_logo.label }}
+        {{ form.company_logo }}
+        {% csrf_token %}
+        <button class="btn btn-primary mt-2" type="submit">Create</button>
+    </form>
+
+{% endblock %}
