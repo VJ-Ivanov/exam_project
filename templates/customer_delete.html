@@ -1,6 +1,6 @@
 {% extends 'shared/site.html' %}
 
-{% block site_content %}
+{% block site_content %}{% include 'partials/sub_nav.html' %}
     <h1>Are you sure you want to delete {{ customercompany.customer_name }}?</h1>
 
     <form method="POST" action="{% url 'customer delete' customercompany.pk %}">

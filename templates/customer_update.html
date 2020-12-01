@@ -1,7 +1,7 @@
 {% extends 'shared/site.html' %}
 
 {% block site_content %}
-
+    {% include 'partials/sub_nav.html' %}
     <form method="post" action="{% url 'customer update' customercompany.pk %}" class="furniture-form">
         {{ form }}
         {% csrf_token %}
