@@ -11,7 +11,12 @@
 
         <div class="box">
             <form method="post" action="{% url 'customer details' customer.pk %}">
-                {{ form }}
+                {{ form.warehouse_address.label }}
+                {{ form.warehouse_address }}
+                {{ form.country.label }}
+                {{ form.country }}
+                {{ form.ramp_on_site.label }}
+                {{ form.ramp_on_site }}
                 {% csrf_token %}
                 <button class="btn btn-primary mt-2" type="submit">Add Warehouse</button>
             </form>
@@ -24,6 +29,7 @@
         <thead>
             <tr class="table-primary">
                 <th scope="col">Warehouse Address</th>
+                <th scope="col">Country</th>
                 <th scope="col">Has Ramp?</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -34,9 +40,10 @@
         {% for warehouse in warehouse_list %}
               <tr>
                 <th>{{ warehouse.warehouse_address }}</th>
+                <th>{{ warehouse.country.name}}</th>
                 <th>{{ warehouse.ramp_on_site}}</th>
                 <th scope="col">
-                    <a href="" class="btn btn-info">Details</a>
+                    <a href="{% url 'warehouse details' warehouse.id %}" class="btn btn-info">Details</a>
                     <a href="" class="btn btn-warning">Update</a>
                     <a href="" class="btn btn-danger">Delete</a>
                 </th>

@@ -1,15 +1,14 @@
 from django import forms
+from app.models import Warehouse
 
 
-class WarehouseForm(forms.Form):
-    warehouse_address = forms.CharField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control rounded-2',
-                   }
-        ))
-    # ramp_on_site = forms.BooleanField(
-    #     widget=forms.CheckboxInput(
-    #         attrs={
-    #             'class': 'form-control'
-    #         }
-    #     ))
+class WarehouseForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for (_, field) in self.fields.items():
+            field.widget.attrs['class'] = 'form-control form-control-sm'
+
+    class Meta:
+        model = Warehouse
+        fields = 'warehouse_address', 'country', 'ramp_on_site'

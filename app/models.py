@@ -37,6 +37,7 @@ class Warehouse(models.Model):
     warehouse_address = models.CharField(max_length=40, blank=False)
     ramp_on_site = models.BooleanField(default=False)
     customer_company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.country} / {self.customer_company} / {self.warehouse_address}'

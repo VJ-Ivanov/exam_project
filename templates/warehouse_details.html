@@ -1,0 +1,51 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}
+    {% include 'partials/sub_nav.html' %}
+    <h1>{{ current_warehouse.customer_company.customer_name }}</h1>
+        <ul>
+            <li>{{ current_warehouse.warehouse_address }}</li>
+            <li>{{ current_warehouse.ramp_on_site }}</li>
+        </ul>
+    <h2> Quote Requests</h2>
+
+        <div class="box">
+            <form method="post" action="{% url 'warehouse details' current_warehouse.pk %}">
+                {{ form }}
+                {% csrf_token %}
+                <button class="btn btn-primary mt-2" type="submit">Add Transport Request</button>
+            </form>
+        </div>
+        <div>
+        ---
+        </div>
+
+    <table style="width:100%"  class="table table-hover">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Seaport</th>
+                <th scope="col">Direction</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in order_list %}
+              <tr>
+                <th>{{ order.seaport.name}}</th>
+                <th>{{ order.direction}}</th>
+                <th scope="col">
+                    <a href="{% url 'request details' order.id %}" class="btn btn-info">Details</a>
+                    <a href="" class="btn btn-warning">Update</a>
+                    <a href="" class="btn btn-danger">Delete</a>
+                </th>
+              </tr>
+{% endfor %}
+            </tbody>
+    </table>
+
+
+
+
+{% endblock %}
