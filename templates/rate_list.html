@@ -10,6 +10,7 @@
                 <th scope="col">Seaport</th>
                 <th scope="col">Trucker</th>
                 <th scope="col">Rate</th>
+                <th scope="col">Mark-Up</th>
                 <th scope="col">From:</th>
                 <th scope="col">To:</th>
             </tr>
@@ -23,6 +24,7 @@
                 <th>{{ rate.request.seaport.un_location_code }}</th>
                 <th>{{ rate.trucker.trucker_name }}</th>
                 <th>{{ rate.rate }} €</th>
+                <th>{{ rate.request.warehouse.customer_company.mark_up }}</th>
                 <th>{{ rate.valid_from }}</th>
                 <th>{{ rate.valid_from }}</th>
               </tr>

@@ -23,6 +23,7 @@ class CustomerCompany(models.Model):
     customer_name = models.CharField(max_length=20, blank=False)
     billing_address = models.CharField(max_length=40)
     company_logo = models.URLField
+    mark_up = models.FloatField(default=0)
     published = models.BooleanField(default=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
