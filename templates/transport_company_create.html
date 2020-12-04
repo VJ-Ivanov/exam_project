@@ -1,0 +1,11 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}
+    {% include 'partials/sub_nav.html' %}
+    <form method="post">
+        {{ form }}
+        {% csrf_token %}
+        <button class="btn btn-primary mt-2" type="submit">Create</button>
+    </form>
+
+{% endblock %}

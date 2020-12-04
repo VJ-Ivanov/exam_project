@@ -22,7 +22,7 @@ class Seaport(models.Model):
 class CustomerCompany(models.Model):
     customer_name = models.CharField(max_length=20, blank=False)
     billing_address = models.CharField(max_length=40)
-    company_logo = models.URLField
+    company_logo = models.URLField()
     mark_up = models.FloatField(default=0)
     published = models.BooleanField(default=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
@@ -47,8 +47,11 @@ class Warehouse(models.Model):
 class TransportCompany(models.Model):
     trucker_name = models.CharField(max_length=20, blank=False)
     billing_address = models.CharField(max_length=40)
-    company_logo = models.URLField
+    company_logo = models.URLField()
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('trucker list')
 
     def __str__(self):
         return f'{self.country} - {self.trucker_name}'

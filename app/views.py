@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView, FormView
 
 from app.forms.customer_form import CustomerCompanyForm
+from app.forms.transport_company_form import TransportCompanyForm
 from app.forms.transport_offer_form import TransportOfferForm
 from app.forms.transport_request_form import TransportRequestForm
 from app.forms.warehouse_form import WarehouseForm
@@ -126,6 +127,16 @@ def transport_request_details_or_add_offer(request, pk):
             transport_offer.request = current_request
             transport_offer.save()
             return redirect('request details', pk)
+
+
+class TransportCompanyCreateView(FormView):
+    form_class = TransportCompanyForm
+    template_name = 'transport_company_create.html'
+    success_url = reverse_lazy('trucker list')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 class TruckerListView(ListView):
