@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'app',
 
     'django.contrib.admin',
@@ -131,4 +132,5 @@ STATICFILES_DIRS = (
     join(BASE_DIR, 'static'),
 )
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'offer list view'
+LOGOUT_REDIRECT_URL = 'landing page'
