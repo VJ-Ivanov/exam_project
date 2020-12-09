@@ -11,7 +11,7 @@
                 <a href="" class="btn btn-warning">Update</a>
             {% endif %}
             {% if can_delete %}
-                <a href="" class="btn btn-danger">Delete</a>
+                <a href="{% url 'warehouse delete' current_warehouse.id %}" class="btn btn-danger">Delete</a>
             {% endif %}
         </ul>
     <h2> Quote Requests</h2>

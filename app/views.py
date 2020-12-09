@@ -68,14 +68,15 @@ class CustomerListView(LoginRequiredMixin, ListView):
     template_name = 'customer_list.html'
 
 
-class CustomerCreateView(LoginRequiredMixin, FormView):
-    form_class = CustomerCompanyForm
+class CustomerCreateView(CreateView):
     template_name = 'customer_create.html'
+    model = CustomerCompany
+    form_class = CustomerCompanyForm
     success_url = reverse_lazy('customer list')
 
     def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+        form.instance.user = self.request.user
+        return super(CustomerCreateView, self).form_valid(form)
 
 
 class CustomerUpdateView(LoginRequiredMixin, UpdateView):
@@ -146,6 +147,17 @@ def warehouse_details_or_add_request(request, pk):
             transport_request.warehouse = current_warehouse
             transport_request.save()
             return redirect('warehouse details', pk)
+
+
+class WarehouseDeleteView(LoginRequiredMixin, DeleteView):
+    fields = '__all__'
+    model = Warehouse
+    template_name = 'warehouse_delete.html'
+
+    def get_success_url(self):
+        warehouse_to_delete_id = self.kwargs['pk']
+        customer_id = Warehouse.objects.get(pk=warehouse_to_delete_id).customer_company.id
+        return reverse_lazy('customer details', kwargs={'pk': customer_id})
 
 
 def transport_request_details_or_add_offer(request, pk):

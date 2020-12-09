@@ -10,7 +10,7 @@ class FilterForm(forms.Form):
         (ORDER_DESC, 'Descending'),
     )
 
-    text = forms.CharField(
+    customer = forms.CharField(
         required=False,
     )
     order = forms.ChoiceField(

@@ -1,0 +1,15 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}{% include 'partials/sub_nav.html' %}
+    <div>Are you sure you want to remove this warehouse location
+        from Customer {{ warehouse.customer_company.customer_name}}?</div>
+    <h1>{{warehouse.warehouse_address}}</h1>
+
+    <form method="POST" action="{% url 'warehouse delete' warehouse.pk %}">
+        {{ form }}
+        {% csrf_token %}
+        <button class="btn btn-primary mt-2" type="submit">Delete</button>
+    </form>
+
+
+{% endblock %}

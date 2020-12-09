@@ -12,4 +12,4 @@ class CustomerCompanyForm(forms.ModelForm):
 
     class Meta:
         model = CustomerCompany
-        fields = '__all__'
+        fields = 'customer_name', 'billing_address', 'mark_up', 'published', 'country'
