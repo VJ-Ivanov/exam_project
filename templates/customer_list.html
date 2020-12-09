@@ -21,8 +21,6 @@
                 <th>{{ customer.billing_address}}</th>
                 <th scope="col">
                     <a href="{% url 'customer details' customer.id %}" class="btn btn-info">Details</a>
-                    <a href="{% url 'customer update' customer.id %}" class="btn btn-warning">Update</a>
-                    <a href="{% url 'customer delete' customer.id %}" class="btn btn-danger">Delete</a>
                 </th>
               </tr>
 {% endfor %}

@@ -3,6 +3,13 @@
 {% block site_content %}
     {% include 'partials/sub_nav.html' %}
     <h1>{{ current_request }}</h1>
+    <ul>
+    <li>
+         <a>Initiated by: {{ current_request.user.username }}</a>
+    </li>
+    </ul>
+    <a href="" class="btn btn-warning">Update</a>
+    <a href="" class="btn btn-danger">Delete</a>
     <h2> Add Offer:</h2>
 
         <div class="box">
@@ -24,8 +31,6 @@
                 <th scope="col">Valid From</th>
                 <th scope="col">Valid To</th>
                 <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -37,8 +42,6 @@
                 <th>{{ offer.valid_to}}</th>
                 <th scope="col">
                     <a href="" class="btn btn-info">Details</a>
-                    <a href="" class="btn btn-warning">Update</a>
-                    <a href="" class="btn btn-danger">Delete</a>
                 </th>
               </tr>
 {% endfor %}

@@ -1,13 +1,26 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView, FormView
 
 from app.forms.customer_form import CustomerCompanyForm
+from app.forms.filter_form import FilterForm
 from app.forms.transport_company_form import TransportCompanyForm
 from app.forms.transport_offer_form import TransportOfferForm
 from app.forms.transport_request_form import TransportRequestForm
 from app.forms.warehouse_form import WarehouseForm
 from app.models import TransportOffer, CustomerCompany, TransportCompany, Warehouse, TransportRequest
+
+
+def extract_filter_values(params):
+    order = params['order'] if 'order' in params else FilterForm.ORDER_ASC
+    text = params['text'] if 'text' in params else ''
+
+    return {
+        'order': order,
+        'text': text,
+    }
 
 
 class LandingPage(TemplateView):
@@ -22,15 +35,40 @@ class OfferListView(ListView):
     context_object_name = 'rates'
     model = TransportOffer
     template_name = 'rate_list.html'
+    order_by_asc = True
+    order_by = 'valid_to'
+    contains_text = ''
+
+    def dispatch(self, request, *args, **kwargs):
+        params = extract_filter_values(request.GET)
+        self.order_by = params['order']
+        self.contains_text = params['text']
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        order_by = 'valid_to' if self.order_by == FilterForm.ORDER_ASC else '-valid_to'
+        result = self.model.objects.filter(
+            request__warehouse__customer_company__customer_name__icontains=self.contains_text
+        ).order_by(order_by)
+        return result
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_form'] = FilterForm(initial={
+            'order': self.order_by,
+            'text': self.contains_text
+        })
+
+        return context
 
 
-class CustomerListView(ListView):
+class CustomerListView(LoginRequiredMixin, ListView):
     context_object_name = 'customers'
     model = CustomerCompany
     template_name = 'customer_list.html'
 
 
-class CustomerCreateView(FormView):
+class CustomerCreateView(LoginRequiredMixin, FormView):
     form_class = CustomerCompanyForm
     template_name = 'customer_create.html'
     success_url = reverse_lazy('customer list')
@@ -40,7 +78,7 @@ class CustomerCreateView(FormView):
         return super().form_valid(form)
 
 
-class CustomerUpdateView(UpdateView):
+class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CustomerCompanyForm
     model = CustomerCompany
     template_name = 'customer_update.html'
@@ -51,22 +89,25 @@ class CustomerUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class CustomerDeleteView(DeleteView):
+class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     fields = '__all__'
     model = CustomerCompany
     template_name = 'customer_delete.html'
     success_url = reverse_lazy('customer list')
 
 
+@login_required()
 def customer_details_or_add_warehouse(request, pk):
     customer = CustomerCompany.objects.get(pk=pk)
     warehouse_list = Warehouse.objects.all().filter(customer_company=pk)
-
+    admin = request.user.id == 1
     if request.method == 'GET':
         context = {
             'customer': customer,
             'form': WarehouseForm(),
-            'warehouse_list': warehouse_list
+            'warehouse_list': warehouse_list,
+            'can_edit': request.user.userprofile.department == "Sales" or admin,
+            'can_delete': request.user.userprofile.department == "Sales" or admin,
         }
         return render(request, 'customer_details.html', context)
     else:
@@ -84,12 +125,15 @@ def customer_details_or_add_warehouse(request, pk):
 def warehouse_details_or_add_request(request, pk):
     current_warehouse = Warehouse.objects.get(pk=pk)
     order_list = TransportRequest.objects.all().filter(warehouse_id=pk)
+    admin = request.user.id == 1
 
     if request.method == 'GET':
         context = {
             'current_warehouse': current_warehouse,
             'form': TransportRequestForm(),
-            'order_list': order_list
+            'order_list': order_list,
+            'can_edit': request.user.userprofile.department == "Sales" or admin,
+            'can_delete': request.user.userprofile.department == "Sales" or admin,
         }
         return render(request, 'warehouse_details.html', context)
     else:
@@ -129,7 +173,7 @@ def transport_request_details_or_add_offer(request, pk):
             return redirect('request details', pk)
 
 
-class TransportCompanyCreateView(FormView):
+class TransportCompanyCreateView(LoginRequiredMixin, FormView):
     form_class = TransportCompanyForm
     template_name = 'transport_company_create.html'
     success_url = reverse_lazy('trucker list')
@@ -143,3 +187,7 @@ class TruckerListView(ListView):
     context_object_name = 'truckers'
     model = TransportCompany
     template_name = 'trucker_list.html'
+
+
+# TODO How to add context to a CBS
+# context["new_context_entry"] = new_context_entry

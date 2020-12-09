@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -26,6 +27,7 @@ class CustomerCompany(models.Model):
     mark_up = models.FloatField(default=0)
     published = models.BooleanField(default=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return reverse('customer list')
@@ -39,6 +41,7 @@ class Warehouse(models.Model):
     ramp_on_site = models.BooleanField(default=False)
     customer_company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.country} / {self.customer_company} / {self.warehouse_address}'
@@ -49,6 +52,7 @@ class TransportCompany(models.Model):
     billing_address = models.CharField(max_length=40)
     company_logo = models.URLField()
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return reverse('trucker list')
@@ -69,6 +73,7 @@ class TransportRequest(models.Model):
     direction = models.CharField(max_length=20, choices=DIRECTIONS, blank=False)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     seaport = models.ForeignKey(Seaport, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         if self.direction == 'Import':
@@ -85,6 +90,7 @@ class TransportOffer(models.Model):
     valid_to = models.DateField(blank=False)
     request = models.ForeignKey(TransportRequest, on_delete=models.CASCADE)
     trucker = models.ForeignKey(TransportCompany, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.rate} with {self.trucker.trucker_name} - ' \
