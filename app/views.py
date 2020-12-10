@@ -68,15 +68,20 @@ class CustomerListView(LoginRequiredMixin, ListView):
     template_name = 'customer_list.html'
 
 
-class CustomerCreateView(CreateView):
+class CustomerCreateView(LoginRequiredMixin, CreateView):
     template_name = 'customer_create.html'
     model = CustomerCompany
     form_class = CustomerCompanyForm
-    success_url = reverse_lazy('customer list')
+
+    def get_success_url(self):
+        url = reverse_lazy('customer details', kwargs={'pk': self.object.id})
+        return url
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(CustomerCreateView, self).form_valid(form)
+        customer = form.save(commit=False)
+        customer.user = self.request.user
+        customer.save()
+        return super().form_valid(form)
 
 
 class CustomerUpdateView(LoginRequiredMixin, UpdateView):
@@ -85,16 +90,25 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'customer_update.html'
     success_url = reverse_lazy('customer list')
 
+    def get_success_url(self):
+        url = reverse_lazy('customer details', kwargs={'pk': self.object.id})
+        return url
+
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
 
 
 class CustomerDeleteView(LoginRequiredMixin, DeleteView):
-    fields = '__all__'
     model = CustomerCompany
     template_name = 'customer_delete.html'
     success_url = reverse_lazy('customer list')
+
+    def dispatch(self, request, *args, **kwargs):
+        customer = self.get_object()
+        if customer.user_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 @login_required()
