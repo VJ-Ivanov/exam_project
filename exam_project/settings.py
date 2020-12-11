@@ -13,6 +13,8 @@ from os.path import join
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -132,5 +134,6 @@ STATICFILES_DIRS = (
     join(BASE_DIR, 'static'),
 )
 
-LOGIN_REDIRECT_URL = 'offer list view'
-LOGOUT_REDIRECT_URL = 'landing page'
+LOGIN_REDIRECT_URL = reverse_lazy('offer list view')
+LOGOUT_REDIRECT_URL = reverse_lazy('landing page')
+LOGIN_URL = reverse_lazy('signin user')
