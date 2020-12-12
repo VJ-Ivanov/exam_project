@@ -122,7 +122,7 @@ class CustomerDetailsView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         customer = self.get_object()
         # admin = self.request.user.id == 1
-        context['form'] = WarehouseForm(),
+        context['form'] = WarehouseForm
         context['created_by'] = customer.user
         context['warehouse_list'] = customer.warehouse_set.all()
         context['can_edit'] = self.request.user == customer.user
@@ -154,6 +154,17 @@ class CustomerDetailsView(LoginRequiredMixin, DetailView):
 #             warehouse.customer_company = customer
 #             warehouse.save()
 #             return redirect('customer details', pk)
+
+class WarehouseCreateView(LoginRequiredMixin, FormView):
+    form_class = WarehouseForm
+
+    def form_valid(self, form):
+        warehouse = form.save(commit=False)
+        warehouse.user = self.request.user
+        warehouse.customer_company = CustomerCompany.objects.get(pk=self.kwargs['pk'])
+        warehouse.country = CustomerCompany.objects.get(pk=self.kwargs['pk']).country
+        warehouse.save()
+        return redirect('customer details', self.kwargs['pk'])
 
 
 def warehouse_details_or_add_request(request, pk):

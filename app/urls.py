@@ -1,7 +1,7 @@
 from django.urls import path
 
 from app.views import LandingPage, OfferListView, MasterData, CustomerListView, TruckerListView, \
-    CustomerCreateView, CustomerDeleteView, CustomerUpdateView, \
+    CustomerCreateView, CustomerDeleteView, CustomerUpdateView, WarehouseCreateView, \
     warehouse_details_or_add_request, transport_request_details_or_add_offer, TransportCompanyCreateView, \
     WarehouseDeleteView, CustomerDetailsView
 
@@ -15,6 +15,7 @@ urlpatterns = (
     path('customers/detail/<int:pk>', CustomerDetailsView.as_view(), name='customer details'),
     path('customers/update/<int:pk>', CustomerUpdateView.as_view(), name='customer update'),
     path('customers/delete/<int:pk>', CustomerDeleteView.as_view(), name='customer delete'),
+    path('warehouse/create/<int:pk>', WarehouseCreateView.as_view(), name='warehouse create'),
     path('warehouses/<int:pk>', warehouse_details_or_add_request, name='warehouse details'),
     path('mwarehouses/delete/<int:pk>', WarehouseDeleteView.as_view(), name='warehouse delete'),
     path('requests/<int:pk>', transport_request_details_or_add_offer, name='request details'),

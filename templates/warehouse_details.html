@@ -6,6 +6,7 @@
         <ul>
             <li>{{ current_warehouse.warehouse_address }}</li>
             <li>{{ current_warehouse.ramp_on_site }}</li>
+            <li>{{ current_warehouse.country }}</li>
             <li>Created by: {{ current_warehouse.user.username }}</li>
             {% if can_edit %}
                 <a href="" class="btn btn-warning">Update</a>

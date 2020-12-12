@@ -18,14 +18,8 @@
     <h2> Warehouses</h2>
 
         <div class="box">
-{#            <form method="post" action="{% url 'customer details' customer.id %}">#}
-            <form>
-                {{ form.warehouse_address.label }}
-                {{ form.warehouse_address }}
-                {{ form.country.label }}
-                {{ form.country }}
-                {{ form.ramp_on_site.label }}
-                {{ form.ramp_on_site }}
+            <form method="post" action="{% url 'warehouse create' customer.id%}">
+                {{ form }}
                 {% csrf_token %}
                 <button class="btn btn-primary mt-2" type="submit">Add Warehouse</button>
             </form>
