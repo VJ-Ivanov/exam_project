@@ -1,9 +1,12 @@
 from django.urls import path
 
-from exam_project.app.views import LandingPage, OfferListView, MasterData, CustomerListView, TruckerListView, \
-    CustomerCreateView, CustomerDeleteView, CustomerUpdateView, WarehouseCreateView, \
-    warehouse_details_or_add_request, transport_request_details_or_add_offer, TransportCompanyCreateView, \
-    WarehouseDeleteView, CustomerDetailsView
+from exam_project.app.views.general_views import *
+from exam_project.app.views.list_views import *
+from exam_project.app.views.customer_views import *
+from exam_project.app.views.warehouse_views import *
+from exam_project.app.views.transport_request_views import *
+from exam_project.app.views.transport_offer_views import *
+from exam_project.app.views.transport_company_views import *
 
 urlpatterns = (
     path('', LandingPage.as_view(), name='landing page'),
