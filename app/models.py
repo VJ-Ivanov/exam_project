@@ -31,9 +31,6 @@ class CustomerCompany(models.Model):
     def get_absolute_url(self):
         return reverse('customer list')
 
-    def __str__(self):
-        return f'{self.country} - {self.customer_name}'
-
 
 class Warehouse(models.Model):
     warehouse_address = models.CharField(max_length=40, blank=False)

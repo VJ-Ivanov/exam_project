@@ -87,6 +87,7 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
 class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CustomerCompanyForm
     model = CustomerCompany
+    context_object_name = 'customer'
     template_name = 'customer_update.html'
     success_url = reverse_lazy('customer list')
 
@@ -103,6 +104,7 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     model = CustomerCompany
     template_name = 'customer_delete.html'
     success_url = reverse_lazy('customer list')
+    context_object_name = 'customer'
 
     def dispatch(self, request, *args, **kwargs):
         customer = self.get_object()
@@ -111,30 +113,47 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
-@login_required()
-def customer_details_or_add_warehouse(request, pk):
-    customer = CustomerCompany.objects.get(pk=pk)
-    warehouse_list = Warehouse.objects.all().filter(customer_company=pk)
-    admin = request.user.id == 1
-    if request.method == 'GET':
-        context = {
-            'customer': customer,
-            'form': WarehouseForm(),
-            'warehouse_list': warehouse_list,
-            'can_edit': request.user.userprofile.department == "Sales" or admin,
-            'can_delete': request.user.userprofile.department == "Sales" or admin,
-        }
-        return render(request, 'customer_details.html', context)
-    else:
-        form = WarehouseForm(request.POST)
-        if form.is_valid():
-            warehouse = Warehouse(
-                warehouse_address=form.cleaned_data['warehouse_address'],
-                country=form.cleaned_data['country']
-            )
-            warehouse.customer_company = customer
-            warehouse.save()
-            return redirect('customer details', pk)
+class CustomerDetailsView(LoginRequiredMixin, DetailView):
+    model = CustomerCompany
+    template_name = 'customer_details.html'
+    context_object_name = 'customer'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = self.get_object()
+        # admin = self.request.user.id == 1
+        context['form'] = WarehouseForm(),
+        context['created_by'] = customer.user
+        context['warehouse_list'] = customer.warehouse_set.all()
+        context['can_edit'] = self.request.user == customer.user
+        context['can_delete'] = self.request.user == customer.user
+        return context
+
+
+# @login_required()
+# def customer_details_or_add_warehouse(request, pk):
+#     customer = CustomerCompany.objects.get(pk=pk)
+#     warehouse_list = Warehouse.objects.all().filter(customer_company=pk)
+#     admin = request.user.id == 1
+#     if request.method == 'GET':
+#         context = {
+#             'customer': customer,
+#             'form': WarehouseForm(),
+#             'warehouse_list': warehouse_list,
+#             'can_edit': request.user.userprofile.department == "Sales" or admin,
+#             'can_delete': request.user.userprofile.department == "Sales" or admin,
+#         }
+#         return render(request, 'customer_details.html', context)
+#     else:
+#         form = WarehouseForm(request.POST)
+#         if form.is_valid():
+#             warehouse = Warehouse(
+#                 warehouse_address=form.cleaned_data['warehouse_address'],
+#                 country=form.cleaned_data['country']
+#             )
+#             warehouse.customer_company = customer
+#             warehouse.save()
+#             return redirect('customer details', pk)
 
 
 def warehouse_details_or_add_request(request, pk):

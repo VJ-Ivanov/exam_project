@@ -1,10 +1,10 @@
 {% extends 'shared/site.html' %}
 
 {% block site_content %}{% include 'partials/sub_nav.html' %}
-    <h1>Are you sure you want to delete {{ customercompany.customer_name }}?</h1>
+    <h1>Are you sure you want to delete {{ customer.customer_name }}?</h1>
 
-    <form method="POST" action="{% url 'customer delete' customercompany.pk %}">
-        {{ form.customercompany.customer_name.label }}
+    <form method="POST" action="{% url 'customer delete' customer.pk %}">
+        {{ form.customer.customer_name.label }}
         {% csrf_token %}
         <button class="btn btn-primary mt-2" type="submit">Delete</button>
         <a class="btn btn-primary mt-2" href="javascript:history.back()">No, go back</a>
