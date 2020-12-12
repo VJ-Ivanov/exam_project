@@ -1,38 +1,44 @@
-      <nav class="navbar-fixed-top navbar-expand-lg navbar-light bg-light" style="margin-bottom:2%">
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li>
-                    <a class="nav-link" href="{% url 'landing page' %}">Home</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="{% url 'offer list view' %}">All Rates</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="{% url 'master data' %}">Master Data</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="">Open Requests</a>
-                </li>
+<nav class="navbar sticky-top navbar-expand-lg navbar navbar-dark bg-dark" style="margin-bottom:2%">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li>
+                <a class="nav-link" href="{% url 'landing page' %}">Home</a>
+            </li>
+            <li>
+                <a class="nav-link" href="{% url 'offer list view' %}">All Rates</a>
+            </li>
+            <li>
+                <a class="nav-link" href="{% url 'master data' %}">Master Data</a>
+            </li>
+            <li>
+                <a class="nav-link" href="">Open Requests</a>
+            </li>
 
-                {% if user.is_authenticated %}
-                    <li>
-                    <a class="nav-link" href="{% url 'user profile' user.id %}">{{ user.username}}</a>
-                    </li>
-                    <li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-80 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li>
+                    <a class="nav-link" href="{% url 'user profile' user.id %}">Welcome {{ user.username }}!</a>
+                </li>
+                <li>
                     <a class="nav-link" href="{% url 'signout user' %}">Sign out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signin user' %}">Sign in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup user' %}">Sign Up</a>
-                    </li>
-                {% endif %}
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signin user' %}">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup user' %}">Sign Up</a>
+                </li>
+            {% endif %}
 
-            </ul>
-         </div>
-      </nav>
+
+        </ul>
+    </div>
+</nav>

@@ -2,14 +2,14 @@
 
 {% block site_content %}
     {% include 'partials/sub_nav.html' %}
-    <h1>{{ current_warehouse.customer_company.customer_name }}</h1>
+    <h1>Warehouse location: {{ current_warehouse.warehouse_address }}</h1>
         <ul>
-            <li>{{ current_warehouse.warehouse_address }}</li>
-            <li>{{ current_warehouse.ramp_on_site }}</li>
-            <li>{{ current_warehouse.country }}</li>
+            <li>Customer: {{ current_warehouse.customer_company.customer_name }}</li>
+            <li>Ramp {{ current_warehouse.ramp_on_site }}</li>
+            <li>Country: {{ current_warehouse.country }}</li>
             <li>Created by: {{ current_warehouse.user.username }}</li>
             {% if can_edit %}
-                <a href="" class="btn btn-warning">Update</a>
+                <a href="{% url 'warehouse update' current_warehouse.id %}" class="btn btn-warning">Update</a>
             {% endif %}
             {% if can_delete %}
                 <a href="{% url 'warehouse delete' current_warehouse.id %}" class="btn btn-danger">Delete</a>
@@ -18,7 +18,7 @@
     <h2> Quote Requests</h2>
 
         <div class="box">
-            <form method="post" action="{% url 'warehouse details' current_warehouse.pk %}">
+            <form method="post" action="{% url 'request create' current_warehouse.id %}">
                 {{ form }}
                 {% csrf_token %}
                 <button class="btn btn-primary mt-2" type="submit">Add Transport Request</button>
@@ -37,12 +37,12 @@
             </tr>
         </thead>
         <tbody>
-        {% for order in order_list %}
+        {% for request in transport_request_list %}
               <tr>
-                <th>{{ order.seaport.name}}</th>
-                <th>{{ order.direction}}</th>
+                <th>{{ request.seaport.name}}</th>
+                <th>{{ request.direction}}</th>
                 <th scope="col">
-                    <a href="{% url 'request details' order.id %}" class="btn btn-info">Details</a>
+                    <a href="{% url 'request details' request.id %}" class="btn btn-info">Details</a>
                 </th>
               </tr>
 {% endfor %}

@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 
 from exam_project.app.forms.filter_form import FilterForm
-from exam_project.app.models import TransportOffer, CustomerCompany, TransportCompany
+from exam_project.app.models import TransportOffer, CustomerCompany, TransportCompany, TransportRequest
 
 
 def extract_filter_values(params):
@@ -49,10 +49,22 @@ class OfferListView(ListView):
 class CustomerListView(LoginRequiredMixin, ListView):
     context_object_name = 'customers'
     model = CustomerCompany
-    template_name = 'customer_list.html'
+    template_name = 'list_customers.html'
 
 
 class TruckerListView(ListView):
     context_object_name = 'truckers'
     model = TransportCompany
     template_name = 'trucker_list.html'
+
+
+# class OpenRequestListView(ListView):
+#     context_object_name = 'open_reqquests'
+#     model = TransportRequest
+#     template_name = 'list_requests_open.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     all_requests = self.model.objects.get_queryset().all()
+    #     all_offers = TransportRequest.objects.get_queryset().all()
+    #     context['open_requests'] = [r for r in all_requests if ]

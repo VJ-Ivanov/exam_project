@@ -1,11 +1,11 @@
 {% extends 'shared/site.html' %}
 
 {% block site_content %}{% include 'partials/sub_nav.html' %}
-    <div>Are you sure you want to remove this warehouse location
-        from Customer {{ warehouse.customer_company.customer_name}}?</div>
-    <h1>{{warehouse.warehouse_address}}</h1>
+    <h3>Are you sure you want to remove:</h3>
+    <a>{{ offer }}</a>
 
-    <form method="POST" action="{% url 'warehouse delete' warehouse.pk %}">
+
+    <form method="POST" action="{% url 'offer delete' offer.id %}">
         {{ form }}
         {% csrf_token %}
         <button class="btn btn-primary mt-2" type="submit">Delete</button>

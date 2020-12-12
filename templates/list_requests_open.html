@@ -1,26 +1,26 @@
 {% extends 'shared/site.html' %}
 
 {% block site_content %}
-    {% include 'partials/sub_nav.html' %}
     <table style="width:100%"  class="table table-hover">
         <thead>
             <tr class="table-primary">
                 <th scope="col">Customer Name</th>
                 <th scope="col">Country</th>
                 <th scope="col">Billing Address</th>
-                <th scope="col">
-                    <a href="{% url 'customer create' %}" class="btn btn-primary">Add Customer</a>
-                </th>
+                <th scope="col">Created by</th>
+
             </tr>
         </thead>
         <tbody>
-        {% for customer in customers %}
+        {% for open_request in open_requests %}
               <tr>
-                <th>{{ customer.customer_name }}</th>
+                <th>
+                    <a href="{% url 'customer details' customer.id %}">{{ customer.customer_name }}</a>
+                </th>
                 <th>{{ customer.country.name  }}</th>
                 <th>{{ customer.billing_address}}</th>
-                <th scope="col">
-                    <a href="{% url 'customer details' customer.id %}" class="btn btn-info">Details</a>
+                <th>
+                    <a href="{% url 'user profile' customer.user_id %}">{{ customer.user.username }}</a>
                 </th>
               </tr>
 {% endfor %}

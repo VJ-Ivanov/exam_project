@@ -28,7 +28,7 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomerCompany
     context_object_name = 'customer'
     template_name = 'customer_update.html'
-    success_url = reverse_lazy('customer list')
+    # success_url = reverse_lazy('customer list')
 
     def get_success_url(self):
         url = reverse_lazy('customer details', kwargs={'pk': self.object.id})

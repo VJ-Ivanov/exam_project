@@ -1,0 +1,23 @@
+{% extends 'shared/site.html' %}
+
+{% block site_content %}
+    {% include 'partials/sub_nav.html' %}
+    <h1>{{ current_offer.rate }} €</h1>
+    <ul>
+    <li>
+         <a>Initiated by: {{ current_offer.user }}</a>
+    </li>
+    <li>
+         <a>Valid from: {{ current_offer.valid_from }}</a>
+    </li>
+    <li>
+         <a>Valid to: {{ current_offer.valid_to }}</a>
+    </li>
+    <li>
+         <a>Trucker: {{ current_offer.trucker.trucker_name }}</a>
+    </li>
+    </ul>
+    <a href="{% url 'offer update' current_offer.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'offer delete' current_offer.id %}" class="btn btn-danger">Delete</a>
+
+{% endblock %}

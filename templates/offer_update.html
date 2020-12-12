@@ -2,7 +2,7 @@
 
 {% block site_content %}
     {% include 'partials/sub_nav.html' %}
-    <form method="post" action="{% url 'warehouse update' warehouse.id %}" class="furniture-form">
+    <form method="post" action="{% url 'offer update' offer.id %}" class="furniture-form">
         {{ form }}
         {% csrf_token %}
         <button class="btn btn-primary mt-2" type="submit">Edit</button>

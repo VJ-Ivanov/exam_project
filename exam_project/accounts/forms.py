@@ -7,7 +7,7 @@ from exam_project.core.BootstrapFormMixin import BootstrapFormMixin
 class SignUpForm(UserCreationForm, BootstrapFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_up_form()
+        self.setup_form()
 
 
 class UserProfileForm(forms.ModelForm):

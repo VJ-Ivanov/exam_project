@@ -2,18 +2,19 @@
 
 {% block site_content %}
     {% include 'partials/sub_nav.html' %}
-    <h1>{{ current_request }}</h1>
+    <h1>{{ current_request.warehouse.customer_company.customer_name }} requests move</h1>
     <ul>
     <li>
          <a>Initiated by: {{ current_request.user.username }}</a>
     </li>
     </ul>
-    <a href="" class="btn btn-warning">Update</a>
-    <a href="" class="btn btn-danger">Delete</a>
+    <a href="{% url 'request update' current_request.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'request delete' current_request.id %}" class="btn btn-danger">Delete</a>
     <h2> Add Offer:</h2>
 
         <div class="box">
-            <form method="post" action="{% url 'request details' current_request.pk %}">
+            <form method="post" action="{% url 'offer create' current_request.pk %}">
+{#            <form>#}
                 {{ form }}
                 {% csrf_token %}
                 <button class="btn btn-primary mt-2" type="submit">Quote Request</button>
@@ -41,7 +42,7 @@
                 <th>{{ offer.valid_from}}</th>
                 <th>{{ offer.valid_to}}</th>
                 <th scope="col">
-                    <a href="" class="btn btn-info">Details</a>
+                    <a href="{% url 'offer details' offer.id %}" class="btn btn-info">Details</a>
                 </th>
               </tr>
 {% endfor %}
