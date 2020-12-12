@@ -4,8 +4,8 @@ from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
-from accounts.forms import SignUpForm, UserProfileForm
-from accounts.models import UserProfile
+from exam_project.accounts.forms import SignUpForm, UserProfileForm
+from exam_project.accounts.models import UserProfile
 
 
 class SignUpView(CreateView):

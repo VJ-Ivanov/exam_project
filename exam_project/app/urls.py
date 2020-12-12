@@ -1,6 +1,6 @@
 from django.urls import path
 
-from app.views import LandingPage, OfferListView, MasterData, CustomerListView, TruckerListView, \
+from exam_project.app.views import LandingPage, OfferListView, MasterData, CustomerListView, TruckerListView, \
     CustomerCreateView, CustomerDeleteView, CustomerUpdateView, WarehouseCreateView, \
     warehouse_details_or_add_request, transport_request_details_or_add_offer, TransportCompanyCreateView, \
     WarehouseDeleteView, CustomerDetailsView

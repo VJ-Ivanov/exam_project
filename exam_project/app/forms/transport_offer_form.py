@@ -1,6 +1,6 @@
 from django import forms
 
-from app.models import TransportOffer
+from exam_project.app.models import TransportOffer
 
 
 class DateInput(forms.DateInput):

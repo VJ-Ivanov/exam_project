@@ -1,9 +1,9 @@
 from django import forms
 
-from app.models import TransportCompany
+from exam_project.app.models import CustomerCompany
 
 
-class TransportCompanyForm(forms.ModelForm):
+class CustomerCompanyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -11,5 +11,6 @@ class TransportCompanyForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        model = TransportCompany
-        fields = '__all__'
+        model = CustomerCompany
+        fields = 'customer_name', 'billing_address', 'mark_up', 'country'
+        # fields = '__all__'

@@ -1,5 +1,5 @@
 from django import forms
-from app.models import TransportRequest
+from exam_project.app.models import TransportRequest
 
 
 class TransportRequestForm(forms.ModelForm):

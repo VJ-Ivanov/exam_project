@@ -1,5 +1,5 @@
 from django import forms
-from app.models import Warehouse
+from exam_project.app.models import Warehouse
 
 
 class WarehouseForm(forms.ModelForm):

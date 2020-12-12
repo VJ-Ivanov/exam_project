@@ -1,16 +1,15 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView, FormView
 
-from app.forms.customer_form import CustomerCompanyForm
-from app.forms.filter_form import FilterForm
-from app.forms.transport_company_form import TransportCompanyForm
-from app.forms.transport_offer_form import TransportOfferForm
-from app.forms.transport_request_form import TransportRequestForm
-from app.forms.warehouse_form import WarehouseForm
-from app.models import TransportOffer, CustomerCompany, TransportCompany, Warehouse, TransportRequest
+from exam_project.app.forms.customer_form import CustomerCompanyForm
+from exam_project.app.forms.filter_form import FilterForm
+from exam_project.app.forms.transport_company_form import TransportCompanyForm
+from exam_project.app.forms.transport_offer_form import TransportOfferForm
+from exam_project.app.forms.transport_request_form import TransportRequestForm
+from exam_project.app.forms.warehouse_form import WarehouseForm
+from exam_project.app.models import TransportOffer, CustomerCompany, TransportCompany, Warehouse, TransportRequest
 
 
 def extract_filter_values(params):
