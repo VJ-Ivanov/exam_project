@@ -14,8 +14,8 @@
     {% if can_delete %}
         <a href="{% url 'request delete' current_request.id %}" class="btn btn-danger">Delete</a>
     {% endif %}
-    <h2> Add Offer:</h2>
     {% if can_quote %}
+        <h2> Add Offer:</h2>
         <div class="box">
             <form method="post" action="{% url 'offer create' current_request.pk %}">
                 {{ form }}
@@ -26,6 +26,7 @@
     {% endif %}
     <div>
         ---
+    <h5>Offers for this reqquest</h5>
     </div>
 
     <table style="width:100%" class="table table-hover">

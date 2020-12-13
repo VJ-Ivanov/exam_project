@@ -61,7 +61,7 @@ class TransportCompany(models.Model):
 
 class TransportRequest(models.Model):
     IMP = 'IMP'
-    EXP = 'IMP'
+    EXP = 'EXP'
 
     DIRECTIONS = (
         (IMP, 'Import'),
@@ -74,7 +74,7 @@ class TransportRequest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        if self.direction == 'Import':
+        if self.direction == "IMP":
             return f'{self.warehouse.customer_company} ' \
                    f'requests move from {self.seaport.name} to {self.warehouse.warehouse_address}'
         else:

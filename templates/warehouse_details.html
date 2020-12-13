@@ -15,6 +15,7 @@
                 <a href="{% url 'warehouse delete' current_warehouse.id %}" class="btn btn-danger">Delete</a>
             {% endif %}
         </ul>
+
     {% if can_manipulate %}
     <h2> Quote Requests</h2>
         <div class="box">
@@ -28,7 +29,7 @@
         <div>
         ---
         </div>
-
+    <h5>Transport requests for this location:</h5>
     <table style="width:100%"  class="table table-hover">
         <thead>
             <tr class="table-primary">
