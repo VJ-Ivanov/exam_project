@@ -3,9 +3,19 @@
 {% block site_content %}
     {% include 'partials/sub_nav.html' %}
     <form method="post" action="{% url 'request update' request.id %}" class="furniture-form">
-        {{ form }}
+        <div style="float: left; margin: 15px">
+            {{ form.warehouse.label}}
+            {{ form.warehouse }}
+            {{ form.direction.label }}
+            {{ form.direction }}
+            {{ form.seaport.label }}
+            {{ form.seaport }}
+        </div>
         {% csrf_token %}
-        <button class="btn btn-primary mt-2" type="submit">Edit</button>
+        <div style="float: right; margin: 15px">
+            <button class="btn btn-primary mt-2" type="submit">Submit changes</button>
+        </div>
+
     </form>
 
 {% endblock %}

@@ -44,6 +44,7 @@ class UserProfileView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile_user'] = self.get_object().user
-        context['companies'] = self.get_object().user.customercompany_set.all()
+        context['published_companies'] = self.get_object().user.customercompany_set.all().filter(published=True)
+        context['pending_companies'] = self.get_object().user.customercompany_set.all().filter(published=False)
 
         return context

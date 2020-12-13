@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'exam_project.accounts',
     'exam_project.app',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.auth',

@@ -7,6 +7,7 @@
             <li>Country: {{ customer.country.name }}</li>
             <li>Billing Address: {{ customer.billing_address }}</li>
             <li>Mark-up: {{ customer.mark_up }} € per transport </li>
+        <li>Published: {{ customer.published }}</li>
             <li>Created by: <a href="{% url 'user profile' created_by.id %}">{{ created_by }}</a></li>
                 {% if can_edit %}
                     <a href="{% url 'customer update' customer.id %}" class="btn btn-warning">Update</a>

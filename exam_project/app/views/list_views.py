@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
+import django_filters
 
 from exam_project.app.forms.filter_form import FilterForm
 from exam_project.app.models import TransportOffer, CustomerCompany, TransportCompany, TransportRequest
@@ -13,6 +14,14 @@ def extract_filter_values(params):
         'order': order,
         'text': text,
     }
+
+
+class RateFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='iexact')
+
+    class Meta:
+        model = TransportOffer
+        fields = ['rate', 'valid_from', 'valid_to']
 
 
 class OfferListView(ListView):
@@ -52,19 +61,19 @@ class CustomerListView(LoginRequiredMixin, ListView):
     template_name = 'list_customers.html'
 
 
-class TruckerListView(ListView):
+class TruckerListView(LoginRequiredMixin, ListView):
     context_object_name = 'truckers'
     model = TransportCompany
     template_name = 'trucker_list.html'
 
 
-# class OpenRequestListView(ListView):
-#     context_object_name = 'open_reqquests'
-#     model = TransportRequest
-#     template_name = 'list_requests_open.html'
+class OpenRequestListView(LoginRequiredMixin, ListView):
+    model = TransportRequest
+    template_name = 'list_requests_open.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     all_requests = self.model.objects.get_queryset().all()
-    #     all_offers = TransportRequest.objects.get_queryset().all()
-    #     context['open_requests'] = [r for r in all_requests if ]
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        index_quotes = set([q.request.id for q in TransportOffer.objects.get_queryset()])
+        context['open_requests'] = [r for r in self.model.objects.all() if r.id not in index_quotes]
+        context['can_quote'] = self.request.user.userprofile.department == 'Pricing'
+        return context

@@ -1,29 +1,42 @@
 {% extends 'shared/site.html' %}
 
 {% block site_content %}
-    <table style="width:100%"  class="table table-hover">
+    <table style="width:100%" class="table table-hover">
         <thead>
-            <tr class="table-primary">
-                <th scope="col">Customer Name</th>
-                <th scope="col">Country</th>
-                <th scope="col">Billing Address</th>
-                <th scope="col">Created by</th>
-
-            </tr>
+        <tr class="table-primary">
+            <th scope="col">Customer Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Direction</th>
+            <th scope="col">Seaport</th>
+            <th scope="col">Requested by</th>
+            <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
         {% for open_request in open_requests %}
-              <tr>
+            <tr>
                 <th>
-                    <a href="{% url 'customer details' customer.id %}">{{ customer.customer_name }}</a>
+                    <a href="{% url 'customer details' open_request.warehouse.customer_company.id %}">
+                        {{ open_request.warehouse.customer_company.customer_name }}
+                    </a>
                 </th>
-                <th>{{ customer.country.name  }}</th>
-                <th>{{ customer.billing_address}}</th>
+                <th>{{ open_request.warehouse.warehouse_address }}</th>
+                <th>{{ open_request.direction }}</th>
+                <th>{{ open_request.seaport.un_location_code }}</th>
                 <th>
-                    <a href="{% url 'user profile' customer.user_id %}">{{ customer.user.username }}</a>
+                    <a href="{% url 'user profile' open_request.user.id %}">
+                        {{ open_request.user.username }}
+                    </a>
                 </th>
-              </tr>
-{% endfor %}
-            </tbody>
+                <th>
+                    {% if can_quote %}
+                    <a class="btn btn-primary" href="{% url 'request details' open_request.id %}">
+                        Quote request
+                    </a>
+                    {% endif %}
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

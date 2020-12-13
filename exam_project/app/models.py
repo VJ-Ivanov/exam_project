@@ -24,12 +24,15 @@ class CustomerCompany(models.Model):
     customer_name = models.CharField(max_length=20, blank=False)
     billing_address = models.CharField(max_length=40)
     mark_up = models.FloatField(default=0)
-    # published = models.BooleanField(default=False)
+    published = models.BooleanField(default=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return reverse('customer list')
+
+    def __str__(self):
+        return f"{self.customer_name}"
 
 
 class Warehouse(models.Model):
@@ -40,7 +43,7 @@ class Warehouse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.country} / {self.customer_company} / {self.warehouse_address}'
+        return f'{self.warehouse_address}'
 
 
 class TransportCompany(models.Model):

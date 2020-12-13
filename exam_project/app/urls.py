@@ -11,6 +11,7 @@ from exam_project.app.views.transport_company_views import *
 urlpatterns = (
     path('', LandingPage.as_view(), name='landing page'),
     path('offers/', OfferListView.as_view(), name='offer list view'),
+    path('open/', OpenRequestListView.as_view(), name='list open requests'),
     path('master_data/', MasterData.as_view(), name='master data'),
 
     path('customers', CustomerListView.as_view(), name='customer list'),
