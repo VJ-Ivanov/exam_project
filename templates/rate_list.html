@@ -1,12 +1,13 @@
 {% extends 'shared/site.html' %}
 
 {% block site_content %}
-    <form method="get" action="{% url 'offer list view' %}">
-        {{ filter_form }}
-        {% csrf_token %}
-        <button>Filter</button>
-    </form>
-    <table style="width:100%"  class="table table-hover">
+
+{#    <form method="get" action="{% url 'offer list view' %}">#}
+{#        {{ filter_form }}#}
+{#        {% csrf_token %}#}
+{#        <button>Filter</button>#}
+{#    </form>#}
+    <table style="width:100%; font-size: small"  class="table table-hover">
         <thead>
             <tr class="table-primary">
                 <th scope="col">Customer</th>

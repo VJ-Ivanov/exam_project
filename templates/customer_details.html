@@ -9,21 +9,23 @@
             <li>Mark-up: {{ customer.mark_up }} € per transport </li>
         <li>Published: {{ customer.published }}</li>
             <li>Created by: <a href="{% url 'user profile' created_by.id %}">{{ created_by }}</a></li>
-                {% if can_edit %}
+                {% if can_manipulate %}
                     <a href="{% url 'customer update' customer.id %}" class="btn btn-warning">Update</a>
                 {% endif %}
-                {% if can_delete %}
+                {% if can_manipulate %}
                     <a href="{% url 'customer delete' customer.id %}" class="btn btn-danger">Delete</a>
                 {% endif %}
         </ul>
     <h2> Warehouses</h2>
 
         <div class="box">
+        {% if can_manipulate %}
             <form method="post" action="{% url 'warehouse create' customer.id%}">
                 {{ form }}
                 {% csrf_token %}
                 <button class="btn btn-primary mt-2" type="submit">Add Warehouse</button>
             </form>
+        {% endif %}
         </div>
         <div>
         ---

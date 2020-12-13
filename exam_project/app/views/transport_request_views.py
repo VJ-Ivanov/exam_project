@@ -60,5 +60,6 @@ class TransportRequestDetailsView(LoginRequiredMixin, DetailView):
         context['offer_list'] = request.transportoffer_set.all()
         context['can_edit'] = self.request.user == request.user
         context['can_delete'] = self.request.user == request.user
+        context['can_quote'] = self.request.user.userprofile.department == "Pricing"
 
         return context

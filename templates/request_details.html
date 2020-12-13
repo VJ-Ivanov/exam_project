@@ -2,51 +2,55 @@
 
 {% block site_content %}
     {% include 'partials/sub_nav.html' %}
-    <h1>{{ current_request.warehouse.customer_company.customer_name }} requests move</h1>
+    <h1>{{ current_request}}</h1>
     <ul>
-    <li>
-         <a>Initiated by: {{ current_request.user.username }}</a>
-    </li>
+        <li>
+            <a>Initiated by: {{ current_request.user.username }}</a>
+        </li>
     </ul>
-    <a href="{% url 'request update' current_request.id %}" class="btn btn-warning">Update</a>
-    <a href="{% url 'request delete' current_request.id %}" class="btn btn-danger">Delete</a>
+    {% if can_edit %}
+        <a href="{% url 'request update' current_request.id %}" class="btn btn-warning">Update</a>
+    {% endif %}
+    {% if can_delete %}
+        <a href="{% url 'request delete' current_request.id %}" class="btn btn-danger">Delete</a>
+    {% endif %}
     <h2> Add Offer:</h2>
-
+    {% if can_quote %}
         <div class="box">
             <form method="post" action="{% url 'offer create' current_request.pk %}">
-{#            <form>#}
                 {{ form }}
                 {% csrf_token %}
                 <button class="btn btn-primary mt-2" type="submit">Quote Request</button>
             </form>
         </div>
-        <div>
+    {% endif %}
+    <div>
         ---
-        </div>
+    </div>
 
-    <table style="width:100%"  class="table table-hover">
+    <table style="width:100%" class="table table-hover">
         <thead>
-            <tr class="table-primary">
-                <th scope="col">Trucker</th>
-                <th scope="col">Cost</th>
-                <th scope="col">Valid From</th>
-                <th scope="col">Valid To</th>
-                <th scope="col"></th>
-            </tr>
+        <tr class="table-primary">
+            <th scope="col">Trucker</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Valid From</th>
+            <th scope="col">Valid To</th>
+            <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
         {% for offer in offer_list %}
-              <tr>
-                <th>{{ offer.trucker}}</th>
-                <th>{{ offer.rate}}</th>
-                <th>{{ offer.valid_from}}</th>
-                <th>{{ offer.valid_to}}</th>
+            <tr>
+                <th>{{ offer.trucker }}</th>
+                <th>{{ offer.rate }}</th>
+                <th>{{ offer.valid_from }}</th>
+                <th>{{ offer.valid_to }}</th>
                 <th scope="col">
                     <a href="{% url 'offer details' offer.id %}" class="btn btn-info">Details</a>
                 </th>
-              </tr>
-{% endfor %}
-            </tbody>
+            </tr>
+        {% endfor %}
+        </tbody>
     </table>
 
 

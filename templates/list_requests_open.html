@@ -29,11 +29,9 @@
                     </a>
                 </th>
                 <th>
-                    {% if can_quote %}
                     <a class="btn btn-primary" href="{% url 'request details' open_request.id %}">
-                        Quote request
+                        Details
                     </a>
-                    {% endif %}
                 </th>
             </tr>
         {% endfor %}

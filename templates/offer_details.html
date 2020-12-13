@@ -17,7 +17,11 @@
          <a>Trucker: {{ current_offer.trucker.trucker_name }}</a>
     </li>
     </ul>
+    {% if can_edit %}
     <a href="{% url 'offer update' current_offer.id %}" class="btn btn-warning">Update</a>
+    {% endif %}
+    {% if can_delete %}
     <a href="{% url 'offer delete' current_offer.id %}" class="btn btn-danger">Delete</a>
+    {% endif %}
 
 {% endblock %}

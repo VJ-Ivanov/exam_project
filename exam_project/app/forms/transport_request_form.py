@@ -11,4 +11,4 @@ class TransportRequestForm(forms.ModelForm):
 
     class Meta:
         model = TransportRequest
-        fields = 'direction', 'seaport', 'warehouse'
+        fields = 'direction', 'seaport',

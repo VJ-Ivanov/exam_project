@@ -8,15 +8,15 @@
             <li>Ramp {{ current_warehouse.ramp_on_site }}</li>
             <li>Country: {{ current_warehouse.country }}</li>
             <li>Created by: {{ current_warehouse.user.username }}</li>
-            {% if can_edit %}
+            {% if can_manipulate %}
                 <a href="{% url 'warehouse update' current_warehouse.id %}" class="btn btn-warning">Update</a>
             {% endif %}
-            {% if can_delete %}
+            {% if can_manipulate %}
                 <a href="{% url 'warehouse delete' current_warehouse.id %}" class="btn btn-danger">Delete</a>
             {% endif %}
         </ul>
+    {% if can_manipulate %}
     <h2> Quote Requests</h2>
-
         <div class="box">
             <form method="post" action="{% url 'request create' current_warehouse.id %}">
                 {{ form }}
@@ -24,6 +24,7 @@
                 <button class="btn btn-primary mt-2" type="submit">Add Transport Request</button>
             </form>
         </div>
+    {% endif %}
         <div>
         ---
         </div>

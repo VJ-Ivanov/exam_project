@@ -58,8 +58,7 @@ class WarehouseDetailsView(LoginRequiredMixin, DetailView):
         context['form'] = TransportRequestForm
         context['created_by'] = warehouse.user
         context['transport_request_list'] = warehouse.transportrequest_set.all()
-        context['can_edit'] = self.request.user == warehouse.user
-        context['can_delete'] = self.request.user == warehouse.user
+        context['can_manipulate'] = self.request.user == warehouse.user
         return context
 
 

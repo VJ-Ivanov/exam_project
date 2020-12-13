@@ -64,6 +64,5 @@ class CustomerDetailsView(LoginRequiredMixin, DetailView):
         context['form'] = WarehouseForm
         context['created_by'] = customer.user
         context['warehouse_list'] = customer.warehouse_set.all()
-        context['can_edit'] = self.request.user == customer.user
-        context['can_delete'] = self.request.user == customer.user
+        context['can_manipulate'] = self.request.user == customer.user
         return context

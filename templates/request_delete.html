@@ -5,7 +5,7 @@
         {{ transportrequest.warehouse.warehouse_address }}?</h3>
     <h3> For customer {{transportrequest.warehouse.customer_company.customer_name}}</h3>
 
-    <form method="GET" action="{% url 'request delete' transportrequest.pk %}">
+    <form method="POST" action="{% url 'request delete' request.pk %}">
         {{ form }}
         {% csrf_token %}
         <button class="btn btn-primary mt-2" type="submit">Delete</button>
